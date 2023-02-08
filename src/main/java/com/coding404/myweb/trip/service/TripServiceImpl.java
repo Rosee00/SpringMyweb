@@ -13,15 +13,40 @@ public class TripServiceImpl implements TripService {
 	@Autowired
 	private TripMapper tripMapper;
 	
-	@Override
+	@Override //등록
 	public int noticeRegist(TripVO vo) {
 		return tripMapper.noticeRegist(vo); //별다른 작업이 없다면 바로 리턴에 작성: 컨트롤러 연결
 	}
 	
 	//
-	@Override
+	@Override //조회
 	public ArrayList<TripVO> getList() {
 		return tripMapper.getList();
+	}
+	
+	@Override //상세조회
+	public TripVO getContent(int tno) {	
+		return tripMapper.getContent(tno);
+	}
+	
+	@Override //수정
+	public int noticeModify(TripVO vo) {
+		return tripMapper.noticeModify(vo);
+	}
+	
+	@Override //삭제
+	public int noticeDelete(int tno) {
+		return tripMapper.noticeDelete(tno);
+	}
+	
+	@Override //조회수
+	public void upHit(int tno) {
+		tripMapper.upHit(tno);
+	}
+	
+	@Override //이전,다음글
+	public ArrayList<TripVO> getPrevNext(int tno) {
+		return tripMapper.getPrevNext(tno);
 	}
 
 }
