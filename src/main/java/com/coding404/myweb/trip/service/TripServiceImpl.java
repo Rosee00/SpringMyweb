@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.coding404.myweb.command.TripVO;
+import com.coding404.myweb.util.Criteria;
 
 @Service("tripService") //빈으로 생성
 public class TripServiceImpl implements TripService {
@@ -20,9 +21,16 @@ public class TripServiceImpl implements TripService {
 	
 	//
 	@Override //조회
-	public ArrayList<TripVO> getList() {
-		return tripMapper.getList();
+	public ArrayList<TripVO> getList(Criteria cri) {
+		return tripMapper.getList(cri);
 	}
+	
+	@Override //전체게시글 수 
+	public int getTotal(Criteria cri) {
+		return tripMapper.getTotal(cri);
+	}
+
+	
 	
 	@Override //상세조회
 	public TripVO getContent(int tno) {	
@@ -48,5 +56,6 @@ public class TripServiceImpl implements TripService {
 	public ArrayList<TripVO> getPrevNext(int tno) {
 		return tripMapper.getPrevNext(tno);
 	}
-
+	
+	
 }

@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.coding404.myweb.command.PageVO;
 import com.coding404.myweb.command.TripVO;
 import com.coding404.myweb.trip.service.TripService;
+import com.coding404.myweb.util.Criteria;
 
 @Controller
 @RequestMapping("/trip")
@@ -27,8 +29,8 @@ public class NoticeController {
 	private TripService tripService;
    
    //화면 구현 - 컨트롤러 연결
-   @RequestMapping("/notice_list")
-   public String notice_list(Model model) {
+   @RequestMapping("/notice_list") //매개변수로 넣어준 
+   public String notice_list(Criteria cri, Model model) { //스프링은 매개변수로 여러vo를 받을 수 있다
 	   
 	   /*
 	    * service, mapper 영역에 getList 함수를 선언하고 
@@ -36,8 +38,37 @@ public class NoticeController {
 	    * model에 담어서
 	    * 화면에서는 반복문으로 처리
 	    */
-	   ArrayList<TripVO> list = tripService.getList();
+	   
+	   //데이터
+	   //ArrayList<TripVO> list = tripService.getList(cri);	   
+	   //페이지네이션계산 
+	   //int total = tripService.getTotal();
+	   //PageVO pageVO = new PageVO(cri, total);
+	   //System.out.println(pageVO.toString());
+	   
+	   //페이지 검색처리
+	   /*
+	    * 1.화면에서는 page, amount, searchType, searchName을 넘긴다.
+	    * 2. criteria에서 검색값을 받는다.
+	    * 3. sql을 바꾼다(동적쿼리)
+	    * 4. total sql을 바꾼다 (동적쿼리)
+	    * 5. 페이지 a태그 클릭시, searchType, searchName을 쿼리 스트링으로 넘긴다.
+	    * 6. 검색키워드의 유지
+	    */
+	   
+	   System.out.println(cri.toString());
+	   
+	   ArrayList<TripVO> list = tripService.getList(cri);
+	   
+	   int total = tripService.getTotal(cri);
+	   
+	   PageVO pageVO = new PageVO(cri, total);
+	   
+	   
 	   model.addAttribute("list", list);
+	   model.addAttribute("pageVO", pageVO);
+	   
+	   
 	   
       return "trip/notice_list";
    }
